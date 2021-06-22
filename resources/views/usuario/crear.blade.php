@@ -19,9 +19,8 @@
             </div>
             @enderror
             @error('cedula')
-            <div class="alert alert-danger" role="alert" name="cedula">
-                {{$message}}
-
+            <div class="alert alert-danger" role="alert">
+                El campo cedula es obligatorio
             </div>
             @enderror
             @error('peso')

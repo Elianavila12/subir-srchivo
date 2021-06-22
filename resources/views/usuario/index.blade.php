@@ -3,14 +3,17 @@
 @section('contenido')
 <div class="container">
     <div class="row">
-        <div class="col l6 m3 s12">
+        <div class="col-6">
             <h4>
                 Usuario
             </h4>
         </div>
         <br>
-        <div class="col l6 m3 s12 text-right">
+        <div class="col-6 text-right">
             <a href="{{route('usuario.crear')}}" class="btn btn-success">Agregar</a>
+            <a href="{{route('usuario.csv')}}" class="btn btn-info btn-small">
+                CSV
+            </a>
         </div>
     </div>
 </div>
@@ -45,9 +48,6 @@
                 <td>{{$usuario->fecha_hora_ingreso}}</td>
                 <td>{{$usuario->estado}}</td>
                 <td>
-                    <a href="{{route('usuario.csv', $usuario->id)}}" class="btn btn-info btn-small">
-                        CSV
-                    </a>
                     <a href="{{route('usuario.editar', $usuario)}}" class="btn btn-warning btn-small">
                         Editar
                     </a>

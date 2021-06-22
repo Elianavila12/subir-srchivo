@@ -29,7 +29,7 @@ Route::post('/usuario/crear', [UserController::class, 'store'])->name('usuario.g
 
 Route::post('/usuario/cargar', [UserController::class, 'importCSV'])->name('usuario.cargar');
 
-Route::get('/usuario/csv/{id}', [UserController::class, 'exportCSV'])->name('usuario.csv');
+Route::get('/usuario/csv', [UserController::class, 'exportCSV'])->name('usuario.csv');
 
 Route::get('/usuario/editar/{user}', [UserController::class, 'edit'])->name('usuario.editar');
 

@@ -40,7 +40,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'cedula'=>'required  | max:10 | unique:users ',
+            'cedula'=>'required|unique:users,cedula',
             'nombre'=>'required',
             'peso'=>'required',
             'fecha_nacimiento'=>'required',
@@ -53,7 +53,6 @@ class UserController extends Controller
         $usuario->peso = $request->peso;
         $usuario->fecha_nacimiento = $request->fecha_nacimiento;
         $usuario->fecha_hora_ingreso = $request->fecha_hora_ingreso;
-        
 
         if (isset($request->estado)) {
             $usuario->estado = $request->estado;
@@ -87,7 +86,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'cedula'=>'required',
+            'cedula'=>'required|unique:users,cedula',
             'nombre'=>'required',
             'peso'=>'required',
             'fecha_nacimiento'=>'required',
@@ -101,7 +100,6 @@ class UserController extends Controller
         $user->fecha_hora_ingreso = $request->fecha_hora_ingreso;
         $user->estado = $request->estado;
         $user->save();
-        
 
         return back()->with('mensaje', 'Usuario actualizado exitosamente');
     }
@@ -121,15 +119,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer $id laravel-excel
      * @return \Illuminate\Http\Response
      */
-    public function exportCSV($id)
+    public function exportCSV()
     { 
-        $user = User::select('nombre', 'cedula', 'peso', 'fecha_nacimiento', 'fecha_hora_ingreso','estado')->where('id', $id)->get();
-        //$user = User::all();
+        $user = User::all();
         $array = $user->toArray();
-        return Excel::download(new UserExport($array), 'usuario.csv');
+        return Excel::download(new UserExport($array), 'usuarios.csv');
     }
 
     /**
@@ -140,19 +136,16 @@ class UserController extends Controller
      */
     public function importCSV(Request $request)
     { 
-        //return $request->hasFile('archivo');
-        /* $request->validate([
-            'archivo' => 'required',
-        ]); */
-
         $usuarios = array();
+        $errores = array();
         
         if ($request->hasFile('archivo')) {
             $importar = new UsuarioImport($request->row);
-            $importar->import($request->file('archivo'));
+            $importar->import($request->file('archivo'), null, \Maatwebsite\Excel\Excel::CSV);
+            $errores = $importar->getErrors();
             $usuarios = $importar->getNewRegisters();
         }
 
-        return view('/usuario/archivo',compact('usuarios'));
+        return view('/usuario/archivo',compact('usuarios', 'errores'));
     }
 }

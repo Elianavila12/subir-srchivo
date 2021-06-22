@@ -1,10 +1,18 @@
 @extends('principal')
 @section('contenido')
+@isset($errores)
+@foreach($errores as $error)
+<div class="container">
+    <div class="alert alert-danger" role="alert">
+        {{$error}}
+    </div>
+</div>
+@endforeach
+@endisset
 <div class="container">
     <table class="table">
         <thead>
             <tr>
-                <th>#ID</th>
                 <th>Nombre</th>
                 <th>Cedula</th>
                 <th>Peso</th>
@@ -16,7 +24,6 @@
         <tbody>
             @foreach($usuarios as $usuario)
             <tr>
-                <td>{{$usuario->id}}</td>
                 <td>{{$usuario->nombre}}</td>
                 <td>{{$usuario->cedula}}</td>
                 <td>{{$usuario->peso}}</td>

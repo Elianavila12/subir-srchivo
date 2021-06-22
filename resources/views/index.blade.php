@@ -21,17 +21,9 @@
                     @error('archivo')
                     <div class="red accent-3 white-text"> El archivo es obligatorio </div>
                     @enderror
-                    @error('row')
-                    <div class="red accent-3 white-text"> El campo de numero de filas es obligatorio </div>
-                    @enderror
                     <div class="form-group col-4">
                         <label for="archivo">Cargue su archivo CSV aqui!</label>
                         <input type="file" id="archivo" name="archivo">
-                    </div>
-                    <div class="form-group col-4">
-                        <label for="row">Indique cuantas filas va a leer</label>
-                        <input type="number" placeholder="Fila" id="row" name="row" value="{{old('row')}}"
-                            class="form-control">
                     </div>
                     <div class="form-group col-4">
                         <button class="btn btn-success" type="submit">Subir Archivo</button>
