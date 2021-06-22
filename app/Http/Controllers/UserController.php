@@ -40,7 +40,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'cedula'=>'required|unique:users,cedula',
+            'cedula'=>'required|max:100.|unique:users,cedula',
             'nombre'=>'required',
             'peso'=>'required',
             'fecha_nacimiento'=>'required',
@@ -86,7 +86,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'cedula'=>'required|unique:users,cedula',
+            'cedula'=>'required|max:100|unique:users,cedula',
             'nombre'=>'required',
             'peso'=>'required',
             'fecha_nacimiento'=>'required',
