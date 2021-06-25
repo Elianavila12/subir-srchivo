@@ -10,6 +10,15 @@
 @endforeach
 @endisset
 <div class="container">
+    <div class="row">
+        <div class="col-12 text-right">
+            <a href="/download" class="btn btn-info"><i class="icon-download-alt"> </i>
+                Descargar Log de Errores
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container">
     <table class="table">
         <thead>
             <tr>

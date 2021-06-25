@@ -19,6 +19,7 @@ class UsuarioImport implements ToCollection, WithValidation, WithChunkReading, W
 
     private $new_registers = [];
     private $errors = [];
+    private $all_errors = [];
 
     /**
     * @param Collection $collection
@@ -34,6 +35,7 @@ class UsuarioImport implements ToCollection, WithValidation, WithChunkReading, W
                     foreach ($validator->errors()->messages() as $messages) {
                         foreach ($messages as $error) {
                             $this->errors[] = $error;
+                            $this->all_errors[$index] = $error;
                         }
                     }
                 } else {                    
@@ -61,6 +63,7 @@ class UsuarioImport implements ToCollection, WithValidation, WithChunkReading, W
                         array_push($this->new_registers, $usuario);
                     } catch (\Throwable $th) {
                         $this->errors[] = 'Ocurrio un error | ' . $row[1]. '|' .$th->getMessage();
+                        $this->all_errors[$index] = 'Ocurrio un error | ' . $row[1]. '|' .$th->getMessage();
                     }
                 }
             }
@@ -87,6 +90,11 @@ class UsuarioImport implements ToCollection, WithValidation, WithChunkReading, W
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public function getAllErrors()
+    {
+        return $this->all_errors;
     }
 
     public function rules(): array

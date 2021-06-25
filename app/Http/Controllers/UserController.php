@@ -7,6 +7,7 @@ use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use App\Imports\UsuarioImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -144,8 +145,25 @@ class UserController extends Controller
             $importar->import($request->file('archivo'), null, \Maatwebsite\Excel\Excel::CSV);
             $errores = $importar->getErrors();
             $usuarios = $importar->getNewRegisters();
+            $archivo_errores = $importar->getAllErrors();
+
+            if (count($archivo_errores) > 0) {
+
+                $archivo = fopen('../storage/app/errores.txt','w+');
+    
+                foreach ($archivo_errores as $key => $fila) {
+                    $cadena = "Error en la fila $key: $fila" . PHP_EOL;
+                    fputs($archivo, $cadena);
+                }
+
+                fclose($archivo);
+            }
         }
 
         return view('/usuario/archivo',compact('usuarios', 'errores'));
+    }
+
+    public function getDownload() {
+        return response()->download(storage_path('app/errores.txt'), 'errores.txt');
     }
 }

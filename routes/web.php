@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +23,8 @@ Route::get('/', function () {
 Route::get('/usuario', [UserController::class, 'index'])->name('usuario.index');
 
 Route::get('/usuario/crear', [UserController::class, 'create'])->name('usuario.crear');
+
+Route::get('/download', [UserController::class, 'getDownload']);
 
 Route::post('/usuario/crear', [UserController::class, 'store'])->name('usuario.guardar');
 
